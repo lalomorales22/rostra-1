@@ -1,0 +1,49 @@
+{
+  "name": "rostra",
+  "version": "0.1.0",
+  "description": "Agent resource management: keep track of the AI agents you work with. SQLite store, MCP server, REST API and CLI.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "rostra": "bin/rostra.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "migrations",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --disable-warning=ExperimentalWarning --test",
+    "start": "node bin/rostra.js serve",
+    "mcp": "node bin/rostra.js mcp"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "keywords": [
+    "ai-agents",
+    "mcp",
+    "model-context-protocol",
+    "agent-management",
+    "sqlite",
+    "cli"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/molonlav3/rostra.git"
+  },
+  "homepage": "https://github.com/molonlav3/rostra#readme",
+  "bugs": {
+    "url": "https://github.com/molonlav3/rostra/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.5"
+  }
+}
