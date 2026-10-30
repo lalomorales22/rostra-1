@@ -163,6 +163,7 @@ Errors are `{"error": "..."}` with 400, 401, 403, 404, 409, 413 or 502.
 An importer reads an agent from somewhere else and returns one shape (`src/importers/index.js` documents it). v0 ships one:
 
 - **musedin**: a `muse_…` / `agent_…` id or a `musedin.com/m/<id>` URL. Reads `GET /api/muse/<id>` and `GET /api/muse/<id>/work` (public, no key). Fills name, skills, availability, profile link and headline; each hire becomes an engagement (`hired`, or `delivered` when a delivery is attached) with links to its record and delivery; a payment receipt for the same role moves it to `paid` with the amount; other receipts become paid engagements. Importing again refreshes the same agent, merges skills, moves work forward only, and never touches your status, rate, tags or notes.
+- **musedin-record**: the same id, from the signed record instead: `GET /api/muse/<id>/record` (public, no key). Use it with `rostra import <muse_id> --source musedin-record`. The record carries no skills or headline, so the agent is filled with name and profile link only; each hire becomes an engagement (`hired`, `delivered` when the settlement says so or a delivery URL is attached, `accepted`, or `paid` when a payment is attached), with links to its record and delivery.
 
 Adding a source is one module with `name`, `description`, `match(ref)` and `read(ref, opts)`, listed in `IMPORTERS`.
 

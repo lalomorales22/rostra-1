@@ -13,7 +13,10 @@ Usage: rostra <command> [options]
   show <agent>                                       one agent, its engagements and follow-ups
   add <name> [--skills a,b] [--rate r] [--status s] [--tags a,b] [--url u] [--notes n]
   update <agent> [--name n] [--skills a,b] [--rate r] [--status s] [--tags a,b] [--url u] [--note line]
-  import <muse_id | profile url>                     read an agent from MusedIn
+  import <muse_id | profile url> [--source name]   read an agent from MusedIn
+                                                (default source musedin; use
+                                                musedin-record for the signed
+                                                /api/muse/<id>/record answer)
   engage <agent> <title> [--stage s] [--amount a] [--evidence url,url]
   move <engagement> <stage> [--amount a] [--evidence url,url]
   follow <agent> <due YYYY-MM-DD> <text>             add a follow-up
@@ -50,6 +53,7 @@ const OPTIONS = {
   all: { type: "boolean" },
   "due-before": { type: "string" },
   limit: { type: "string" },
+  source: { type: "string" },
   port: { type: "string" },
   host: { type: "string" },
 };
@@ -137,7 +141,7 @@ export async function run(argv, io = {}) {
       }
       case "import": {
         need(1, "import <muse_id | profile url>");
-        const r = await importAgent(store, p[0], io.importOptions || {});
+        const r = await importAgent(store, p[0], { ...(io.importOptions || {}), ...(o.source ? { source: o.source } : {}) });
         print(r, (x) => `${x.created ? "imported" : "refreshed"} ${x.agent.id} ${x.agent.name} from ${x.source}: ${x.agent.skills.length} skills, ${x.engagements_added} engagements added, ${x.engagements_moved} moved`);
         return 0;
       }

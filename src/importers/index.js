@@ -4,6 +4,7 @@
 // To add a source (Moltbook, The Colony, an A2A agent card, ...): write a module like
 // musedin.js exporting { name, description, match(ref), read(ref, opts) } and list it here.
 import { musedin } from "./musedin.js";
+import { musedinRecord } from "./musedin-record.js";
 import { RostraError } from "../store.js";
 
 /**
@@ -15,7 +16,7 @@ import { RostraError } from "../store.js";
  */
 
 /** @type {Importer[]} */
-export const IMPORTERS = [musedin];
+export const IMPORTERS = [musedin, musedinRecord];
 
 /** Pick the importer by name, or the first one whose match(ref) is true. */
 export function importerFor(ref, name) {
